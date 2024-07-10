@@ -190,7 +190,10 @@ export default function Table(props) {
                   <div className="popover-theme">
                     <div className="flex justify-between items-center pb-2">
                       <p className="me-4 font-bold">{e.name}</p>
-                      <p className="ms-4">{e.type}</p>
+                      <p className="ms-4">{e.type}
+                      {
+                        e.size && <span className="text-[10px]">({e.size})</span>
+                      }</p>
                     </div>
                     <hr />
                     {e.primary && (
@@ -326,6 +329,9 @@ export default function Table(props) {
             <div className="flex gap-1 items-center">
               {fieldData.primary && <IconKeyStroked />}
               <span>{fieldData.type.substr(0, 12)}</span>
+              {
+                fieldData.size && <span className="text-[10px]">({fieldData.size})</span>
+              }
             </div>
           )}
         </div>
