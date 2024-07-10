@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo_light_160.png";
 import { SideSheet } from "@douyinfe/semi-ui";
 import { IconMenu } from "@douyinfe/semi-icons";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
+  const { logout,user } = useAuth()
 
   return (
     <>
@@ -61,6 +63,16 @@ export default function Navbar() {
           >
             <i className="opacity-70 bi bi-discord" />
           </a>
+          <a
+            title="Logout"
+            className="px-3 py-2 bg-zinc-100 hover:opacity-60 transition-all duration-300 rounded-full text-2xl cursor-pointer"
+            onClick={logout}
+          >
+            <i className="opacity-70 bi bi-box-arrow-right" />
+          </a>
+          <span>
+            {user?.username}
+          </span>
         </div>
         <button
           onClick={() => setOpenMenu((prev) => !prev)}

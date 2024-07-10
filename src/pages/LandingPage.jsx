@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconCrossStroked } from "@douyinfe/semi-icons";
 import SimpleCanvas from "../components/SimpleCanvas";
 import Navbar from "../components/Navbar";
@@ -16,10 +16,12 @@ import FadeIn from "../animations/FadeIn";
 import SlideIn from "../animations/SlideIn";
 
 export default function LandingPage() {
-  const [showSurvey, setShowSurvey] = useState(true);
+  const [showSurvey, setShowSurvey] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     document.body.setAttribute("theme-mode", "light");
+    navigate('/editor')
     document.title =
       "drawDB | Online database diagram editor and SQL generator";
   });
