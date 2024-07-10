@@ -149,7 +149,7 @@ export default function WorkSpace() {
   const load = useCallback(async () => {
     const loadLatestDiagram = async () => {
       await db.diagrams
-        .orderBy("lastModified")
+        .orderBy("updatedAt")
         .last()
         .then((d) => {
           if (d) {
