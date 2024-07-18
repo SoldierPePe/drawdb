@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import Editor from "./pages/Editor";
 import Survey from "./pages/Survey";
-import BugReport from "./pages/BugReport";
+import BugReport from "./pages/BugReport";  
 import Shortcuts from "./pages/Shortcuts";
 import Templates from "./pages/Templates";
 import LandingPage from "./pages/LandingPage";
@@ -16,7 +16,7 @@ import { AuthProvider } from "./hooks/useAuth";
 export default function App() {
   return (
     <SettingsContextProvider>
-      <BrowserRouter>
+      <HashRouter>
         <RestoreScroll />
         <AuthProvider>
           <Routes>
@@ -74,7 +74,7 @@ export default function App() {
             } />
           </Routes>
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </SettingsContextProvider>
   );
 }
