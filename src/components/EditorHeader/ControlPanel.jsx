@@ -66,6 +66,7 @@ import Modal from "./Modal/Modal";
 import { useTranslation } from "react-i18next";
 import { exportSQL } from "../../utils/exportSQL";
 import { databases } from "../../data/databases";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function ControlPanel({
   diagramId,
@@ -110,6 +111,7 @@ export default function ControlPanel({
   const { transform, setTransform } = useTransform();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { logout, user } = useAuth()
 
   const invertLayout = (component) =>
     setLayout((prev) => ({ ...prev, [component]: !prev[component] }));
@@ -244,9 +246,9 @@ export default function ControlPanel({
             indices: tables[a.tid].indices.map((index) =>
               index.id === a.iid
                 ? {
-                    ...index,
-                    ...a.undo,
-                  }
+                  ...index,
+                  ...a.undo,
+                }
                 : index,
             ),
           });
@@ -418,9 +420,9 @@ export default function ControlPanel({
             indices: tables[a.tid].indices.map((index) =>
               index.id === a.iid
                 ? {
-                    ...index,
-                    ...a.redo,
-                  }
+                  ...index,
+                  ...a.redo,
+                }
                 : index,
             ),
           });
@@ -1013,7 +1015,7 @@ export default function ControlPanel({
             },
           },
         ],
-        function: () => {},
+        function: () => { },
       },
       exit: {
         function: () => {
@@ -1193,7 +1195,7 @@ export default function ControlPanel({
             },
           },
         ],
-        function: () => {},
+        function: () => { },
       },
       zoom_in: {
         function: zoomIn,
@@ -1254,18 +1256,18 @@ export default function ControlPanel({
     },
     help: {
       shortcuts: {
-        function: () => window.open("/shortcuts", "_blank"),
+        function: () => window.open("/#/shortcuts", "_blank"),
         shortcut: "Ctrl+H",
       },
       ask_on_discord: {
         function: () => window.open("https://discord.gg/BrjZgNrmR6", "_blank"),
       },
       report_bug: {
-        function: () => window.open("/bug-report", "_blank"),
+        function: () => window.open("/#/bug-report", "_blank"),
       },
       feedback: {
-        function: () => window.open("/survey", "_blank"),
-      },
+        function: () => window.open("/#/survey", "_blank"),
+      }
     },
   };
 
@@ -1294,7 +1296,7 @@ export default function ControlPanel({
   });
   useHotkeys("ctrl+alt+c, meta+alt+c", copyAsImage, { preventDefault: true });
   useHotkeys("ctrl+r, meta+r", resetView, { preventDefault: true });
-  useHotkeys("ctrl+h, meta+h", () => window.open("/shortcuts", "_blank"), {
+  useHotkeys("ctrl+h, meta+h", () => window.open("/#/shortcuts", "_blank"), {
     preventDefault: true,
   });
   useHotkeys("ctrl+alt+w, meta+alt+w", fitWindow, { preventDefault: true });
@@ -1661,6 +1663,10 @@ export default function ControlPanel({
               </Button>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col justify-end items-center px-5 gap-1">
+          <span className="text-sm text-gray-400">Welcome, <b>{user?.username}</b></span>
+          <Button size="small" type="tertiary" onClick={() => logout()}>{t('logout')}</Button>
         </div>
       </nav>
     );
