@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconCrossStroked } from "@douyinfe/semi-icons";
 import SimpleCanvas from "../components/SimpleCanvas";
 import Navbar from "../components/Navbar";
@@ -25,8 +25,9 @@ function shortenNumber(number) {
 }
 
 export default function LandingPage() {
-  const [showSurvey, setShowSurvey] = useState(true);
+  const [showSurvey, setShowSurvey] = useState(false);
   const [stats, setStats] = useState({ stars: 18000, forks: 1200 });
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -36,6 +37,7 @@ export default function LandingPage() {
     };
 
     document.body.setAttribute("theme-mode", "light");
+    navigate('/editor')
     document.title =
       "drawDB | Online database diagram editor and SQL generator";
 

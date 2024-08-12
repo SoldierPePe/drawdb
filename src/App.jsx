@@ -1,58 +1,80 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import Editor from "./pages/Editor";
 import Survey from "./pages/Survey";
-import BugReport from "./pages/BugReport";
+import BugReport from "./pages/BugReport";  
 import Shortcuts from "./pages/Shortcuts";
 import Templates from "./pages/Templates";
 import LandingPage from "./pages/LandingPage";
 import SettingsContextProvider from "./context/SettingsContext";
 import { useSettings } from "./hooks";
 import NotFound from "./pages/NotFound";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import Login from "./pages/Login";
+import { AuthProvider } from "./hooks/useAuth";
 
 export default function App() {
   return (
     <SettingsContextProvider>
-      <BrowserRouter>
+      <HashRouter>
         <RestoreScroll />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/editor"
-            element={
-              <ThemedPage>
-                <Editor />
-              </ThemedPage>
-            }
-          />
-          <Route
-            path="/survey"
-            element={
-              <ThemedPage>
-                <Survey />
-              </ThemedPage>
-            }
-          />
-          <Route
-            path="/shortcuts"
-            element={
-              <ThemedPage>
-                <Shortcuts />
-              </ThemedPage>
-            }
-          />
-          <Route
-            path="/bug-report"
-            element={
-              <ThemedPage>
-                <BugReport />
-              </ThemedPage>
-            }
-          />
-          <Route path="/templates" element={<Templates />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <LandingPage />
+              </ProtectedRoute>
+            } />
+            <Route
+              path="/editor"
+              element={
+                <ProtectedRoute>
+                  <ThemedPage>
+                    <Editor />
+                  </ThemedPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/survey"
+              element={
+                <ProtectedRoute>
+                  <ThemedPage>
+                    <Survey />
+                  </ThemedPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/shortcuts"
+              element={
+                <ProtectedRoute>
+                  <ThemedPage>
+                    <Shortcuts />
+                  </ThemedPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/bug-report"
+              element={
+                <ProtectedRoute>
+                  <ThemedPage>
+                    <BugReport />
+                  </ThemedPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />
+            <Route path="*" element={
+              <ProtectedRoute>
+                <NotFound />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </AuthProvider>
+      </HashRouter>
     </SettingsContextProvider>
   );
 }

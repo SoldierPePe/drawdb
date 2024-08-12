@@ -1,13 +1,12 @@
-import Dexie from "dexie";
-import { templateSeeds } from "./seeds";
+import { DiagramService } from "../core/services/diagramService"
+import { TemplateService } from "../core/services/templateService"
 
-export const db = new Dexie("drawDB");
-
-db.version(5).stores({
-  diagrams: "++id, lastModified",
-  templates: "++id, custom",
-});
-
-db.on("populate", (transaction) => {
-  transaction.templates.bulkAdd(templateSeeds).catch((e) => console.log(e));
-});
+export const db = {
+  diagrams: new DiagramService(),
+  templates: new TemplateService(),
+  delete: ()=>{
+    return new Promise((resolve, reject)=>{
+      reject("Not implemented")
+    })
+  },
+}
