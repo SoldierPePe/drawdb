@@ -7,7 +7,7 @@ import Shortcuts from "./pages/Shortcuts";
 import Templates from "./pages/Templates";
 import LandingPage from "./pages/LandingPage";
 import SettingsContextProvider from "./context/SettingsContext";
-import useSettings from "./hooks/useSettings";
+import { useSettings } from "./hooks";
 import NotFound from "./pages/NotFound";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import Login from "./pages/Login";
